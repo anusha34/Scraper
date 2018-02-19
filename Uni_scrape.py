@@ -29,10 +29,11 @@ def parse_ursinus(k = "Ursinus"):
     for c_name in c_list_items:
         link = c_name.get('href')
         links = urls + link
-        html_page = urlopen(links)
-        soup = BeautifulSoup(html_page, 'html.parser')
-        con_list = soup.find(class_='editable')
-        print(con_list)
+        print(links)
+     #   html_page = urlopen(links)
+    #    soup = BeautifulSoup(html_page, 'html.parser')
+   #     con_list = soup.find(class_='editable')
+  #      print(con_list)
   #      con_items = con_list.find_all('div')
    #     for con_name in con_items:
     #        names = con_name.get_text().encode('UTF8')
