@@ -8,18 +8,26 @@ import requests
 def parse_immaculata(page):
     soup = BeautifulSoup(page, 'html.parser')
     c_list = soup.find(class_='region region-content')
-    print(c_list)
     c_list_items = c_list.find_all('a')
     for c_name in c_list_items:
-        names = c_name.get_text()
+        content = c_name.get_text()
         link = c_name.get('href')
+        ima_dict = {
+            #"context": text,
+            "url": link,
+            "content": content
+        }
         html_page = urlopen(link)
         soup = BeautifulSoup(html_page, 'html.parser')
         con_list = soup.find(class_='region region-content')
         con_items = con_list.find_all('div')
         for con_name in con_items:
-            names = con_name.get_text().encode('UTF8')
-            print(names)
+            text_list = con_name.get_text().encode('UTF8')
+        ima_dict["text"] = 'context' + ":" + str(text_list)
+            #result_data1.append(ima_dict)
+            #print(result_data1)
+            # result_data1.append(ima_dict)
+             #print(result_data1)
             #s = open(key + '.txt', 'a+')
             #s.write(str(names) + "\n")
     print('Parsed Immaculata')
@@ -30,19 +38,39 @@ def parse_ursinus(page):
     c_list = soup.find(class_='lw_subnav')
     c_list_items = c_list.find_all('a')
     for c_name in c_list_items:
+        content = c_name.get_text()
         url = c_name.get('href')
         link = 'http://www.ursinus.edu' + url
+        urs_dict = {
+            #"text": text,
+            "url": link,
+            "content": content
+            }
         html_page = urlopen(link)
         soup = BeautifulSoup(html_page, 'html.parser')
         content_list = soup.find(id='main')
-        content_items = content_list.find_all(['p', 'ul'])
+        content_items = content_list.find_all([ 'p', 'ul' ])
         for content_items_list in content_items:
-            names = content_items_list.get_text().encode('UTF8')
-            print(names)
+            text_list = content_items_list.get_text().encode('UTF8')
+        ima_dict["context"] = 'context' + ":" + str(text_list)
+        result_data2.append(urs_dict)
             #s = open(key + '.txt', 'a+')
             #s.write(str(names) + "\n")
     print('Parsed Ursinus')
 
+ima_dict = {}
+urs_dict = {}
+
+result_data1 = []
+result_data2 = []
+
+
+title_ix_data = {
+    "Immaculata" : result_data1,
+    "Ursinus" : result_data2
+}
+
+print(title_ix_data)
 
 universities = ["Immaculata" , "Ursinus"]
 
@@ -57,10 +85,8 @@ university_funcs =  {
     'Ursinus' : parse_ursinus
 }
 
-result_dict = {}
-
 for key in universities:
-    urls = university_urls[key]
-    print(urls)
-    pg = urlopen(urls)
+    url = university_urls[key]
+    print(url)
+    pg = urlopen(url)
     university_funcs[key](pg)
