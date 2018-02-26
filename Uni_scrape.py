@@ -6,8 +6,8 @@ import requests
 
 # region region-content class for immaculata
 def parse_immaculata(page):
-    soup = BeautifulSoup(page, 'html.parser')
-    content_list = soup.find(class_='region region-content')
+    immaculata_soup = BeautifulSoup(page, 'html.parser')
+    content_list = immaculata_soup.find(class_='region region-content')
     content_list_items = content_list.find_all('a')
     for content_name in content_list_items:
         content = content_name.get_text()
@@ -16,9 +16,9 @@ def parse_immaculata(page):
             "url": link,
             "content": content
         }
-        html_page = urlopen(link)
-        soup = BeautifulSoup(html_page, 'html.parser')
-        content_list = soup.find(class_='region region-content')
+        immaculata_html = urlopen(link)
+        immaculata_soup = BeautifulSoup(immaculata_html, 'html.parser')
+        content_list = immaculata_soup.find(class_='region region-content')
         content_items = content_list.find_all('div')
         for content_name in content_items:
             text_list = content_name.get_text().encode('UTF8')
@@ -30,8 +30,8 @@ def parse_immaculata(page):
 
 # class for ursinus : lw_subnav (for links) and editable (for content)
 def parse_ursinus(page):
-    soup = BeautifulSoup(page, 'html.parser')
-    content_list = soup.find(class_='lw_subnav')
+    ursinus_soup = BeautifulSoup(page, 'html.parser')
+    content_list = ursinus_soup.find(class_='lw_subnav')
     content_list_items = content_list.find_all('a')
     for content_name in content_list_items:
         content = content_name.get_text()
@@ -41,12 +41,12 @@ def parse_ursinus(page):
             "url": link,
             "content": content
         }
-        html_page = urlopen(link)
-        soup = BeautifulSoup(html_page, 'html.parser')
-        content_list = soup.find(id='main')
-        con_items = content_list.find_all(['p', 'ul'])
-        for con_name in con_items:
-            text_list = con_name.get_text().encode('UTF8')
+        ursinus_html = urlopen(link)
+        ursinus_soup = BeautifulSoup(ursinus_html, 'html.parser')
+        content_list = ursinus_soup.find(id='main')
+        content_items = content_list.find_all(['p', 'ul'])
+        for content_name in content_items:
+            text_list = content_name.get_text().encode('UTF8')
         ursinus_dict["text"] = str(text_list)
         dict_list2.append(ursinus_dict)
     print('Parsed Ursinus')
@@ -70,10 +70,10 @@ university_urls = {
     'Ursinus': 'http://www.ursinus.edu/student-life/handbook/sexual-and-gender-based-misconduct'
 }
 
-for key in universities:
-    url = university_urls[key]
+for university in universities:
+    url = university_urls[university]
     page = urlopen(url)
-    read_func = university_funcs[key](page)
-    title_ix_data[key] = read_func
+    read_func = university_funcs[university](page)
+    title_ix_data[university] = read_func
 
 print(title_ix_data)
