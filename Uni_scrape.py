@@ -76,7 +76,8 @@ def parse_ursinus(page):
     print('Parsed Ursinus')
     return dict_list2
 
-
+# todo: mose these into the functions they belong in, they aren't needed here,
+# also, they both can be called just <universityname>_link_list or something
 dict_list1 = []
 dict_list2 = []
 
@@ -98,6 +99,7 @@ for key in universities:
     url = university_urls[key]
     # print(url)
     pg = urlopen(url)
+    #todo: read_func should be called something else more descriptive - maybe university_link_list?
     read_func = university_funcs[key](pg)
     title_ix_data[key] = read_func
 
