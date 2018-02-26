@@ -74,5 +74,5 @@ for university in universities:
     page = urlopen(url)
     university_func_call = university_funcs[university](page)
     title_ix_data[university] = university_func_call
-
-print(title_ix_data)
+s = open('pa_title_ix.json', 'a+')
+s.write(str(title_ix_data) + "\n")
