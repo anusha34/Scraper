@@ -1,7 +1,5 @@
 from bs4 import BeautifulSoup
-import json
 from urllib.request import urlopen
-import requests
 
 
 # region region-content class for immaculata
