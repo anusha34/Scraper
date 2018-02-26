@@ -4,6 +4,7 @@ import json
 from urllib.request import urlopen
 import requests
 
+
 #region region-content class for immaculata
 def parse_immaculata(page):
     soup = BeautifulSoup(page, 'html.parser')
@@ -24,11 +25,13 @@ def parse_immaculata(page):
         for con_name in con_items:
             text_list = con_name.get_text().encode('UTF8')
         ima_dict["text"] = str(text_list)
-        dictList1.append(ima_dict)
+        dict_list1.append(ima_dict)
+        title_ix(dict_list1)
     #print(dictList1)
             #s = open(key + '.txt', 'a+')
             #s.write(str(names) + "\n")
     print('Parsed Immaculata')
+    return dict_list1
 
 
 # class for ursinus : lw_subnav (for links) and editable (for content)
@@ -52,41 +55,40 @@ def parse_ursinus(page):
         for con_name in con_items:
             text_list = con_name.get_text().encode('UTF8')
         urs_dict["text"] = str(text_list)
-        dictList2.append(urs_dict)
+        dict_list2.append(urs_dict)
+        title_ix(dict_list2)
     #print(dictList2)
         #print(dictList2)
             #s = open(key + '.txt', 'a+')
             #s.write(str(names) + "\n")
     print('Parsed Ursinus')
+    return dict_list2
 
-ima_dict = {}
-urs_dict = {}
-
-dictList1 = []
-dictList2 = []
-
-title_ix_data = {
-    "Immaculata" : dictList1,
-    "Ursinus" : dictList2
-}
-
-print(title_ix_data)
-
-universities = ["Immaculata" , "Ursinus"]
-
-university_urls = {
-    'Immaculata' : 'http://www.immaculata.edu/titleix',
-    'Ursinus' : 'http://www.ursinus.edu/student-life/handbook/sexual-and-gender-based-misconduct'
+def title_ix(dict_list1, dict_list2):
+    title_ix_data = {
+        "Immaculata": dict_list1,
+        "Ursinus": dict_list2
     }
+    print("visited")
+    print(title_ix_data)
 
 
-university_funcs =  {
-    'Immaculata' : parse_immaculata,
-    'Ursinus' : parse_ursinus
+dict_list1 = []
+dict_list2 = []
+universities = ["Immaculata", "Ursinus"]
+university_urls = {
+    'Immaculata': 'http://www.immaculata.edu/titleix',
+    'Ursinus': 'http://www.ursinus.edu/student-life/handbook/sexual-and-gender-based-misconduct'
+    }
+university_funcs = {
+    'Immaculata': parse_immaculata,
+    'Ursinus': parse_ursinus
 }
 
 for key in universities:
     url = university_urls[key]
-    print(url)
+    #print(url)
     pg = urlopen(url)
     university_funcs[key](pg)
+
+
