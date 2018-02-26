@@ -85,8 +85,8 @@ for key in universities:
     url = university_urls[key]
     # print(url)
     pg = urlopen(url)
-    x = university_funcs[key](pg)
-    title_ix_data[key] = x
+    read_func = university_funcs[key](pg)
+    title_ix_data[key] = read_func
 print(title_ix_data)
 
 
