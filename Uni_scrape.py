@@ -1,8 +1,21 @@
 from bs4 import BeautifulSoup
 import json
+
+# todo: is there a reason you used urllib.request insteas of the default request library?
+# try and use that if possible. either way, remove the import that isn't used when you are done
 from urllib.request import urlopen
 import requests
 
+### General todos:
+# Do each of these, commit after each change clearly stating which one you fixed
+# todo: 1. Remove commented out lines of code (not regular comments)
+# todo: 2. Add comments to explain a little more
+# todo: 3. use refactor>rename in pycharm to rename your variables to *not use* abbreviations
+# (i.e. con_list should be content_list, pg -> page, ima_x -> immaculatta_x)
+# todo: 4. use refactor>rename in pycharm to rename your variables to *use* extra descriptions
+# (i.e. html_page should be immaculatta_html, soup -> immaculatta_soup, key -> university etc.)
+# todo: 5. follow the other todo instructions throughout this file
+# todo: 6. Delete all these todo comments (including thsi list) when you are done
 
 # region region-content class for immaculata
 def parse_immaculata(page):
@@ -87,6 +100,8 @@ for key in universities:
     pg = urlopen(url)
     read_func = university_funcs[key](pg)
     title_ix_data[key] = read_func
+
+#todo: you can add code to write this to a file called 'pa_title_ix.json' instead.
 print(title_ix_data)
 
 
