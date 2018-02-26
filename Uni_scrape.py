@@ -6,6 +6,7 @@ import requests
 
 # region region-content class for immaculata
 def parse_immaculata(page):
+    immaculata_list = []
     immaculata_soup = BeautifulSoup(page, 'html.parser')
     content_list = immaculata_soup.find(class_='region region-content')
     content_list_items = content_list.find_all('a')
@@ -23,13 +24,14 @@ def parse_immaculata(page):
         for content_name in content_items:
             text_list = content_name.get_text().encode('UTF8')
         immaculata_dict["text"] = str(text_list)
-        dict_list1.append(immaculata_dict)
+        immaculata_list.append(immaculata_dict)
     print('parsed Immacula')
-    return dict_list1
+    return immaculata_list
 
 
 # class for ursinus : lw_subnav (for links) and editable (for content)
 def parse_ursinus(page):
+    ursinus_list = []
     ursinus_soup = BeautifulSoup(page, 'html.parser')
     content_list = ursinus_soup.find(class_='lw_subnav')
     content_list_items = content_list.find_all('a')
@@ -48,13 +50,10 @@ def parse_ursinus(page):
         for content_name in content_items:
             text_list = content_name.get_text().encode('UTF8')
         ursinus_dict["text"] = str(text_list)
-        dict_list2.append(ursinus_dict)
+        ursinus_list.append(ursinus_dict)
     print('Parsed Ursinus')
-    return dict_list2
+    return ursinus_list
 
-
-dict_list1 = []
-dict_list2 = []
 
 title_ix_data = {}
 
