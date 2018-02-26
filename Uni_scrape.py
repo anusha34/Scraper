@@ -72,7 +72,7 @@ university_urls = {
 for university in universities:
     url = university_urls[university]
     page = urlopen(url)
-    read_func = university_funcs[university](page)
-    title_ix_data[university] = read_func
+    university_func_call = university_funcs[university](page)
+    title_ix_data[university] = university_func_call
 
 print(title_ix_data)
