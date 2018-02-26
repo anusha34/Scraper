@@ -23,14 +23,13 @@ def parse_immaculata(page):
         con_items = con_list.find_all('div')
         for con_name in con_items:
             text_list = con_name.get_text().encode('UTF8')
-        ima_dict["text"] = 'context' + ":" + str(text_list)
-            #result_data1.append(ima_dict)
-            #print(result_data1)
-            # result_data1.append(ima_dict)
-             #print(result_data1)
+        ima_dict["text"] = str(text_list)
+        dictList1.append(ima_dict)
+    #print(dictList1)
             #s = open(key + '.txt', 'a+')
             #s.write(str(names) + "\n")
     print('Parsed Immaculata')
+
 
 # class for ursinus : lw_subnav (for links) and editable (for content)
 def parse_ursinus(page):
@@ -48,12 +47,14 @@ def parse_ursinus(page):
             }
         html_page = urlopen(link)
         soup = BeautifulSoup(html_page, 'html.parser')
-        content_list = soup.find(id='main')
-        content_items = content_list.find_all([ 'p', 'ul' ])
-        for content_items_list in content_items:
-            text_list = content_items_list.get_text().encode('UTF8')
-        ima_dict["context"] = 'context' + ":" + str(text_list)
-        result_data2.append(urs_dict)
+        con_list = soup.find(id='main')
+        con_items = con_list.find_all([ 'p', 'ul' ])
+        for con_name in con_items:
+            text_list = con_name.get_text().encode('UTF8')
+        urs_dict["text"] = str(text_list)
+        dictList2.append(urs_dict)
+    #print(dictList2)
+        #print(dictList2)
             #s = open(key + '.txt', 'a+')
             #s.write(str(names) + "\n")
     print('Parsed Ursinus')
@@ -61,13 +62,12 @@ def parse_ursinus(page):
 ima_dict = {}
 urs_dict = {}
 
-result_data1 = []
-result_data2 = []
-
+dictList1 = []
+dictList2 = []
 
 title_ix_data = {
-    "Immaculata" : result_data1,
-    "Ursinus" : result_data2
+    "Immaculata" : dictList1,
+    "Ursinus" : dictList2
 }
 
 print(title_ix_data)
